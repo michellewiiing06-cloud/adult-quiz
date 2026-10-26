@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সাথী সংঘ — জ্ঞান যাচাইয়ের আসর</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  font-family:'Noto Sans Bengali',sans-serif;
+  background:linear-gradient(135deg,#fff7ed,#fef2f2 45%,#fff);
+  color:#241b1b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.app{
+  width:min(900px,100%);
+  min-height:620px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(120,60,40,.12);
+  border-radius:28px;
+  box-shadow:0 20px 60px rgba(80,35,20,.12);
+  overflow:hidden;
+  position:relative;
+}
+.topbar{
+  height:9px;
+  background:linear-gradient(90deg,#e85d04,#f48c06,#e63946);
+}
+.screen{
+  min-height:610px;
+  padding:54px clamp(24px,7vw,72px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 16px;
+  border-radius:999px;
+  background:#fff1e6;
+  color:#b33b00;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:22px;
+}
+h1{
+  font-size:clamp(38px,7vw,66px);
+  line-height:1.05;
+  margin-bottom:14px;
+  font-weight:800;
+}
+.subtitle{
+  font-size:clamp(19px,3vw,27px);
+  font-weight:600;
+  margin-bottom:22px;
+}
+.description{
+  max-width:650px;
+  font-size:17px;
+  line-height:1.9;
+  color:#655656;
+  margin-bottom:34px;
+}
+button{
+  border:0;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:700;
+  font-size:17px;
+  border-radius:14px;
+  padding:14px 25px;
+  transition:.2s ease;
+}
+button:hover{transform:translateY(-2px)}
+.primary{
+  color:white;
+  background:linear-gradient(135deg,#e85d04,#e63946);
+  box-shadow:0 10px 25px rgba(230,57,70,.22);
+}
+.secondary{
+  background:#fff4eb;
+  color:#a63a08;
+}
+.hidden{display:none!important}
+.question-wrap{width:100%;max-width:720px}
+.progress{
+  height:8px;
+  background:#f2e7df;
+  border-radius:20px;
+  overflow:hidden;
+  margin:18px 0 44px;
+}
+.progress-bar{
+  height:100%;
+  width:3.333%;
+  background:linear-gradient(90deg,#e85d04,#e63946);
+  border-radius:20px;
+  transition:width .35s ease;
+}
+.question-number{
+  color:#b44a18;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+.question{
+  font-size:clamp(25px,4vw,39px);
+  line-height:1.55;
+  font-weight:700;
+  margin-bottom:38px;
+}
+.answer{
+  background:#fff8f1;
+  border:1px solid #f2d8c5;
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:26px;
+  animation:appear .3s ease;
+}
+.answer-label{
+  color:#c14a12;
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+.answer-text{
+  font-size:25px;
+  font-weight:700;
+}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.end-title{font-size:clamp(34px,6vw,55px);margin-bottom:18px}
+.end-text{font-size:19px;color:#665757;line-height:1.8;margin-bottom:30px}
+.footer{
+  position:absolute;
+  bottom:18px;
+  width:100%;
+  text-align:center;
+  color:#a58d83;
+  font-size:13px;
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:600px){
+  body{padding:10px}
+  .app{border-radius:22px}
+  .screen{min-height:calc(100vh - 20px);padding:42px 22px}
+  .question{line-height:1.45}
+  .footer{bottom:12px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar"></div>
+
+  <section id="intro" class="screen">
+    <div class="badge">🇮🇳 সাথী সংঘ</div>
+    <h1>জ্ঞান যাচাইয়ের আসর</h1>
+    <div class="subtitle">আপনি কতটা জানেন, আজ দেখা যাক!</div>
+    <p class="description">
+      পুরাণ, ইতিহাস, বিজ্ঞান, গণিত, ভূগোল, খেলাধুলা ও সাধারণ জ্ঞানের
+      ৩০টি কঠিন প্রশ্ন আপনার জন্য অপেক্ষা করছে।
+      কোনো বিকল্প নেই। কোনো স্কোর নেই। শুধু প্রশ্ন, উত্তর আর শেখা।
+    </p>
+    <button class="primary" onclick="startQuiz()">কুইজ শুরু করুন</button>
+    <div class="footer">সাথী সংঘ • জ্ঞান, বন্ধুত্ব ও আনন্দের মিলনমেলা</div>
+  </section>
+
+  <section id="quiz" class="screen hidden">
+    <div class="question-wrap">
+      <div class="question-number" id="questionNumber"></div>
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="question" id="questionText"></div>
+
+      <div id="answerBox" class="answer hidden">
+        <div class="answer-label">সঠিক উত্তর</div>
+        <div class="answer-text" id="answerText"></div>
+      </div>
+
+      <div class="actions">
+        <button id="answerButton" class="primary" onclick="showAnswer()">উত্তর দেখুন</button>
+        <button id="nextButton" class="secondary hidden" onclick="nextQuestion()">পরবর্তী প্রশ্ন →</button>
+      </div>
+    </div>
+    <div class="footer">সাথী সংঘ</div>
+  </section>
+
+  <section id="end" class="screen hidden">
+    <div class="badge">🎉 সম্পূর্ণ হয়েছে</div>
+    <div class="end-title">কুইজ সম্পূর্ণ!</div>
+    <p class="end-text">
+      সাথী সংঘের কুইজে অংশ নেওয়ার জন্য ধন্যবাদ। ❤️<br>
+      আবার শুরু করে ৩০টি প্রশ্ন উপভোগ করতে পারেন।
+    </p>
+    <button class="primary" onclick="restartQuiz()">আবার শুরু করুন</button>
+    <div class="footer">সাথী সংঘ • জ্ঞান, বন্ধুত্ব ও আনন্দের মিলনমেলা</div>
+  </section>
+</div>
+
+<script>
+const questions = [
+  ["মহাভারতে ভীষ্মের আসল নাম কী ছিল?", "দেবব্রত"],
+  ["যদি x + 1/x = 5 হয়, তাহলে x² + 1/x² কত?", "২৩"],
+  ["ভারতের প্রথম ব্যক্তিগত অলিম্পিক স্বর্ণপদকজয়ী কে?", "অভিনব বিন্দ্রা"],
+  ["‘ইন্ডিকা’ গ্রন্থটি কে লিখেছিলেন?", "মেগাস্থিনিস"],
+  ["মানুষের পরিণত লোহিত রক্তকণিকায় কোন অঙ্গাণু থাকে না?", "নিউক্লিয়াস"],
+  ["রামায়ণে রাবণের পিতার নাম কী?", "ঋষি বিশ্রবা"],
+  ["ভারতের সর্বদক্ষিণ প্রান্তের নাম কী?", "ইন্দিরা পয়েন্ট"],
+  ["প্লাসির যুদ্ধ কত সালে হয়েছিল?", "১৭৫৭ সাল"],
+  ["কর্ণ কোন দেবতার পুত্র ছিলেন?", "সূর্যদেব"],
+  ["25 ÷ 5 × 100 + 12 = ?", "৫১২"],
+  ["ভারতের প্রথম ব্যক্তিগত অলিম্পিক পদকজয়ী কে ছিলেন?", "কে. ডি. যাদব"],
+  ["সিন্ধু সভ্যতার কোন শহর উন্নত নিকাশি ব্যবস্থার জন্য বিখ্যাত?", "মহেঞ্জাদারো"],
+  ["শ্রীকৃষ্ণের শঙ্খের নাম কী ছিল?", "পাঞ্চজন্য"],
+  ["পৃথিবীর বায়ুমণ্ডলে সবচেয়ে বেশি কোন গ্যাস রয়েছে?", "নাইট্রোজেন"],
+  ["‘সত্যমেব জয়তে’ কোন উপনিষদ থেকে নেওয়া হয়েছে?", "মুণ্ডক উপনিষদ"],
+  ["অভিমন্যু কার কাছ থেকে চক্রব্যূহে প্রবেশের কৌশল শুনেছিল?", "অর্জুনের কাছ থেকে"],
+  ["ভারতের মধ্যে সম্পূর্ণভাবে প্রবাহিত দীর্ঘতম নদী কোনটি?", "গোদাবরী"],
+  ["48 ÷ 6 × 7 + 15 − 9 = ?", "৬২"],
+  ["কলিঙ্গ যুদ্ধের পর কোন সম্রাটের জীবনে বড় পরিবর্তন আসে?", "সম্রাট অশোক"],
+  ["ভিটামিন C-এর অভাবে কোন রোগ হয়?", "স্কার্ভি"],
+  ["মহাভারতে দ্রৌপদীর পিতা কে ছিলেন?", "রাজা দ্রুপদ"],
+  ["লোকটাক হ্রদ কোন রাজ্যে অবস্থিত?", "মণিপুর"],
+  ["ভারতের হয়ে টেস্ট ক্রিকেটে প্রথম ট্রিপল সেঞ্চুরি কে করেছিলেন?", "বীরেন্দ্র সেহওয়াগ"],
+  ["সূর্যের আলো পৃথিবীতে পৌঁছাতে প্রায় কত সময় লাগে?", "৮ মিনিট ২০ সেকেন্ড"],
+  ["রামায়ণে লক্ষ্মণের স্ত্রীর নাম কী ছিল?", "উর্মিলা"],
+  ["একটি ত্রিভুজের দুটি কোণ ৫০° ও ৬০° হলে তৃতীয় কোণ কত?", "৭০°"],
+  ["ভারতের প্রথম সম্পূর্ণ জৈব কৃষিভিত্তিক রাজ্য কোনটি?", "সিকিম"],
+  ["ক্রিকেটে ব্যাটার শূন্য রান করে আউট হলে তাকে কী বলা হয়?", "ডাক"],
+  ["মহাভারতে পাণ্ডবদের মধ্যে কে গদাযুদ্ধে বিশেষ পারদর্শী ছিলেন?", "ভীম"],
+  ["ভারতের সংবিধান কবে গৃহীত হয়েছিল?", "২৬ নভেম্বর ১৯৪৯"]
+];
+
+let current = 0;
+let answerShown = false;
+
+function startQuiz(){
+  current = 0;
+  show("quiz");
+  renderQuestion();
+}
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+function renderQuestion(){
+  answerShown = false;
+  const q = questions[current];
+  document.getElementById("questionNumber").textContent =
+    `প্রশ্ন ${current + 1} / ${questions.length}`;
+  document.getElementById("questionText").textContent = q[0];
+  document.getElementById("answerText").textContent = q[1];
+  document.getElementById("answerBox").classList.add("hidden");
+  document.getElementById("answerButton").classList.remove("hidden");
+  document.getElementById("nextButton").classList.add("hidden");
+  document.getElementById("progressBar").style.width =
+    `${((current + 1) / questions.length) * 100}%`;
+}
+function showAnswer(){
+  if(answerShown) return;
+  answerShown = true;
+  document.getElementById("answerBox").classList.remove("hidden");
+  document.getElementById("answerButton").classList.add("hidden");
+  document.getElementById("nextButton").classList.remove("hidden");
+}
+function nextQuestion(){
+  if(current < questions.length - 1){
+    current++;
+    renderQuestion();
+  }else{
+    show("end");
+  }
+}
+function restartQuiz(){
+  current = 0;
+  show("quiz");
+  renderQuestion();
+}
+</script>
+</body>
+</html>
